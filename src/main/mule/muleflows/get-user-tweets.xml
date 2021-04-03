@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="get-user-tweets" doc:id="56c0c830-5308-4bcc-acf5-34d8a72cbce5" >
+		<http:request method="GET" doc:name="Twitter GET /users/by/username/{username}" doc:id="b7c65921-24d6-4386-8dc6-779c462869ac" config-ref="Twitter_Request_Configuration" path="/users/by/username/{username}">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"Authorization" : "Bearer " ++ p('twitter.bearer.token')
+}]]]></http:headers>
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	"username" : attributes.uriParams.'twitter_handle'
+}]]]></http:uri-params>
+		</http:request>
+		<http:request method="GET" doc:name="Twitter GET /users/{user_id}/tweets" doc:id="63cbba2b-2ea7-44ff-8255-6fb29df01e63" config-ref="Twitter_Request_Configuration" path="/users/{user_id}/tweets">
+			<http:headers><![CDATA[#[output application/java
+---
+{
+	"Authorization" : "Bearer " ++ p('twitter.bearer.token')
+}]]]></http:headers>
+			<http:uri-params><![CDATA[#[output application/java
+---
+{
+	"user_id" : payload.data.id
+}]]]></http:uri-params>
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"tweet.fields" : "attachments,author_id,context_annotations,conversation_id,created_at,entities,geo,id,in_reply_to_user_id,lang,referenced_tweets,reply_settings,source,text,withheld", 
+	"user.fields" : "created_at,description,entities,id,location,name,pinned_tweet_id,profile_image_url,protected,public_metrics,url,username,verified,withheld"
+}]]]></http:query-params>
+		</http:request>
+		<ee:transform doc:name="Transform Tweets" doc:id="7828dcc7-a111-45a1-99e0-2a570aec91b4" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json skipNullOn="everywhere"
+---
+(payload.data default []) map ((tweet) -> {
+	conversation_id: tweet.conversation_id, 
+	author_id: tweet.author_id, 
+	in_reply_to_user_id: tweet.in_reply_to_user_id, 
+	language: tweet.language, 
+	created_at: tweet.created_at as DateTime { format: "yyyy-MM-dd'T'HH:mm:ss.SSSXXX" }, 
+	text: tweet.text, 
+	id: tweet.id
+})]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

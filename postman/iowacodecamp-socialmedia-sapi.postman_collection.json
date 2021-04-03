@@ -1,0 +1,44 @@
+{
+	"info": {
+		"_postman_id": "f3c39a30-5834-413f-996a-3377ea8fd10e",
+		"name": "iowacodecamp-socialmedia-sapi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/user/{twitter_handle}/tweets",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "client_id",
+						"value": "6c0c6140031b41ad9422f1dea033eb10",
+						"type": "text"
+					},
+					{
+						"key": "client_secret",
+						"value": "01493d4b74De46EfBD8B5CD27c875894",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/sapi/iowacodecamp-socialmedia/v1/user/ImMattAsh/tweets",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"sapi",
+						"iowacodecamp-socialmedia",
+						"v1",
+						"user",
+						"ImMattAsh",
+						"tweets"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

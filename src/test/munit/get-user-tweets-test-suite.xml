@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="get-user-tweets-test-suite.xml" />
+	<munit:test name="get-user-tweets-success-test" description="Test" doc:id="92ab7940-8709-4a2b-bb0f-57220bd203bf" >
+		<munit:behavior >
+			<munit:set-event doc:name="Set Event" doc:id="30bdd896-f1fe-4d31-bdda-3b440f26cd7d" >
+				<munit:attributes value="#[{headers: {}, uriParams: {}, queryParams: {}}]" />
+
+			</munit:set-event>
+			<munit-tools:mock-when doc:name="Mock GET /users/by/username/{username}" doc:id="95124872-400c-4933-b24e-33c0a405cd9c" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="Twitter GET /users/by/username/{username}" attributeName="doc:name" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[MunitTools::getResourceAsString('get-user-tweets/get-twitter-user-by-username-response.json', 'UTF-8')]" mediaType="application/json" encoding="UTF-8" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit-tools:mock-when doc:name="Mock GET /users/{user_id}/tweets" doc:id="c4f743c6-c0d9-4aa3-b666-1d6c3af1e147" processor="http:request" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="Twitter GET /users/{user_id}/tweets" attributeName="doc:name" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[MunitTools::getResourceAsString('get-user-tweets/get-twitter-user-tweets-response.json', 'UTF-8')]" mediaType="application/json" encoding="UTF-8" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		
+</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="get-user-tweets" doc:id="7ec5295b-3f7f-48c4-9912-729fb5cd937b" name="get-user-tweets"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Payload matches" doc:id="9f7eb756-5d24-4045-8ee3-c997fd3a8795" expression="#[payload]" is="#[MunitTools::equalTo(readUrl('classpath://get-user-tweets/response.json', 'application/json'))]" message="Payload should match"/>
+		</munit:validation>
+	</munit:test>
+
+</mule>

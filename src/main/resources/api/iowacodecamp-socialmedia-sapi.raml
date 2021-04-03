@@ -1,0 +1,27 @@
+#%RAML 1.0
+title: iowacodecamp-socialmedia-sapi
+version: v1
+description: Manages IowaCodeCamp.com interfaces with Social Media integrations
+baseUri: /sapi/iowacodecamp-socialmedia/{version}
+
+protocols: [ HTTPS ]
+
+mediaType: [ application/json ]
+
+types:
+  Error: !include data-type/error.raml
+  Tweet: !include data-type/tweet.raml
+
+resourceTypes: 
+  collection: !include resource/collection.raml
+  member: !include resource/member.raml
+  
+/user/{twitter_handle}/tweets:
+  description: Tweets for a Twitter user's handle
+  type:
+    collection:
+      type-name: Tweet  
+      success-example-collection: !include example/tweets.raml
+      error-type-name: Error
+      errors-example: !include example/error.raml
+  get:  

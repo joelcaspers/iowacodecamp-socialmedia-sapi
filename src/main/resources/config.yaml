@@ -1,0 +1,18 @@
+# Anypoint settings
+anypoint:
+  platform:
+    visualizer:
+      layer: Iowa Code Camp System API
+      tags: Social Media, System API, Backend
+
+# API and API Manager settings
+api:
+  host: '${api.host}'
+  port: '${api.port}'
+  protocol: HTTPS
+  manager:
+    id: '${api.manager.id}'
+    flowref: iowacodecamp-socialmedia-sapi-main
+twitter: 
+  bearer: 
+    token: '${twitter.bearer.token}'
