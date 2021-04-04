@@ -22,12 +22,12 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8081/sapi/iowacodecamp-socialmedia/v1/user/ImMattAsh/tweets",
+					"raw": "http://localhost:8082/sapi/iowacodecamp-socialmedia/v1/user/ImMattAsh/tweets",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8081",
+					"port": "8082",
 					"path": [
 						"sapi",
 						"iowacodecamp-socialmedia",

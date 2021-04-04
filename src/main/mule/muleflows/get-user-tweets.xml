@@ -6,7 +6,7 @@
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
 http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
-	<flow name="get-user-tweets" doc:id="56c0c830-5308-4bcc-acf5-34d8a72cbce5" >
+	<sub-flow name="get-user-tweets" doc:id="56c0c830-5308-4bcc-acf5-34d8a72cbce5" >
 		<http:request method="GET" doc:name="Twitter GET /users/by/username/{username}" doc:id="b7c65921-24d6-4386-8dc6-779c462869ac" config-ref="Twitter_Request_Configuration" path="/users/by/username/{username}">
 			<http:headers ><![CDATA[#[output application/java
 ---
@@ -53,5 +53,5 @@ output application/json skipNullOn="everywhere"
 })]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-	</flow>
+	</sub-flow>
 </mule>
