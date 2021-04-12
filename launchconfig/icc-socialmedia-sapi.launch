@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.mule.tooling.runtime.muleServerLaunchType">
+<stringAttribute key="clear_data" value="ALWAYS"/>
+<booleanAttribute key="consoleEnabled" value="false"/>
+<stringAttribute key="launch_mule_server_version" value="org.mule.tooling.server.4.3.0.ee"/>
+<stringAttribute key="maven.command.line" value=""/>
+<booleanAttribute key="maven.snapshot.updates" value="false"/>
+<stringAttribute key="mule-agent-port" value="57401"/>
+<stringAttribute key="mule-agent-token-auth" value="1b24baf5-c687-42d2-80f1-0f431d670de7"/>
+<listAttribute key="mule-project-names">
+<listEntry value="iowacodecamp-socialmedia-sapi"/>
+</listAttribute>
+<booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="iowacodecamp-socialmedia-sapi"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-M-Danypoint.platform.gatekeeper=disabled -M-Diowacodecamp.socialmedia.sapi.host=localhost -M-Diowacodecamp.socialmedia.sapi.port=8082 -M-Dtwitter.bearer.token=REPLACEME"/>
+<intAttribute key="remote-debug-max-stream-size" value="2"/>
+<intAttribute key="remote-debug-port" value="6666"/>
+<booleanAttribute key="remote-debug-suspend" value="false"/>
+</launchConfiguration>
